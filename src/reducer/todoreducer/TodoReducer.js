@@ -7,26 +7,14 @@ import {
   ADD_TODO,
   EDIT_TODO,
   REMOVE_TODO,
-  ACTION_TODO
+  ACTION_TODO,
 } from "../todoreducer/types";
 
 const initialState = {
-  todo: [
-    // {
-    //   key: 1,
-    //   name: "Default Value",
-    //   isCompleted: true,
-    //   bucketId : 1
-    // }
-  ],
-  buckets: [
-    // {
-    //   name: "Default",
-    //   key: 1
-    // }
-  ],
+  todo: [],
+  buckets: [],
   selectedbucket: "",
-  selectedbucketid: 1
+  selectedbucketid: 0,
 };
 
 const TodoReducer = (state = initialState, action) => {
@@ -34,7 +22,7 @@ const TodoReducer = (state = initialState, action) => {
     case GET_BUCKET:
       return {
         ...state,
-        buckets: action.payload
+        buckets: action.payload,
       };
     case EDIT_BUCKET:
       state.buckets.forEach((e) => {
@@ -44,7 +32,7 @@ const TodoReducer = (state = initialState, action) => {
       });
       return {
         ...state,
-        buckets: state.buckets
+        buckets: state.buckets,
       };
     case REMOVE_BUCKET:
       return {
@@ -52,7 +40,7 @@ const TodoReducer = (state = initialState, action) => {
         buckets: state.buckets.filter((e) => {
           return e.key !== action.payload.key;
         }),
-        todo: []
+        todo: [],
       };
     case ADD_BUCKET:
       let bucketlength = state.buckets.length;
@@ -62,16 +50,16 @@ const TodoReducer = (state = initialState, action) => {
           ...state.buckets,
           {
             key: bucketlength + 1,
-            name: ""
-          }
-        ]
+            name: "",
+          },
+        ],
       };
     case GET_TODO:
       return {
         ...state,
         todo: action.payload,
         selectedbucket: action.selectedbucket,
-        selectedbucketid: action.selectedbucketid
+        selectedbucketid: action.selectedbucketid,
       };
     case ADD_TODO:
       let todolength = state.todo.length;
@@ -82,9 +70,9 @@ const TodoReducer = (state = initialState, action) => {
           {
             key: todolength + 1,
             name: "",
-            isCompleted: false
-          }
-        ]
+            isCompleted: false,
+          },
+        ],
       };
     case EDIT_TODO:
       state.todo.forEach((e) => {
@@ -97,7 +85,7 @@ const TodoReducer = (state = initialState, action) => {
       });
       return {
         ...state,
-        todo: state.todo
+        todo: state.todo,
       };
     case REMOVE_TODO:
       return {
@@ -107,7 +95,7 @@ const TodoReducer = (state = initialState, action) => {
             e.key !== action.payload.key &&
             state.selectedbucketid === action.payload.selectedbucketid
           );
-        })
+        }),
       };
     case ACTION_TODO:
       return {
@@ -119,7 +107,7 @@ const TodoReducer = (state = initialState, action) => {
               ? action.payload
               : e;
           return obj;
-        })
+        }),
       };
     default:
       return state;

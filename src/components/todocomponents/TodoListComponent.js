@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import Icon from "@material-ui/core/Icon";
 import Typography from "@material-ui/core/Typography";
 import TodoComponent from "./TodoComponent";
+import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import {
   addAsyncTodo,
@@ -10,6 +11,10 @@ import {
   actionAsyncTodo
 } from "../../reducer/todoreducer/actions/todo/actions";
 import NewTodoListComponent from "../shared/NewItemComponent";
+import Slide from '@material-ui/core/Slide';
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 const TodoListComponent = (props) => {
   const {
     todo,
@@ -20,18 +25,17 @@ const TodoListComponent = (props) => {
     removeTodo,
     selectedbucketid
   } = props;
-  const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setOpen(false);
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
   const createText = "Create New Todo";
   return (
     <div className="clsTodoComp">
@@ -58,24 +62,25 @@ const TodoListComponent = (props) => {
         {selectedbucket ? (
           <Fragment>
             <Icon
-              onClick={handleClick}
+              onClick={handleClickOpen}
               color="primary"
               className="clsRight"
               style={{ fontSize: 50 }}
             >
               add
             </Icon>
+            <Grid item xs={10}>
             <NewTodoListComponent
-              anchorEl={anchorEl}
-              open={open}
-              id={id}
+              Transition = {Transition}
+              open = {open}
               title={createText}
               handleClose={handleClose}
               onSave={addTodo}
               bucketid={selectedbucketid}
               bucketname={selectedbucket}
-            />
+            /> </Grid>
           </Fragment>
+         
         ) : null}
       </div>
     </div>

@@ -11,6 +11,10 @@ import {
   removeAsyncBucket
 } from "../../reducer/todoreducer/actions/bucket/actions";
 import { getAsyncTodo } from "../../reducer/todoreducer/actions/todo/actions";
+import Slide from '@material-ui/core/Slide';
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 const BucketListComponent = (props) => {
   const {
     getTodo,
@@ -20,19 +24,15 @@ const BucketListComponent = (props) => {
     getBucket,
     removeBucket
   } = props;
+  const [open, setOpen] = React.useState(false);
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setOpen(false);
   };
-
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
   const createText = "Create New Bucket";
   useEffect(() => {
     getBucket();
@@ -51,7 +51,7 @@ const BucketListComponent = (props) => {
         ))}
       </ul>
       <Icon
-        onClick={handleClick}
+        onClick={handleClickOpen}
         color="primary"
         className="clsRight iconAbs"
         style={{ fontSize: 50 }}
@@ -59,9 +59,8 @@ const BucketListComponent = (props) => {
         add_box
       </Icon>
       <NewBucketComponent
-        anchorEl={anchorEl}
-        open={open}
-        id={id}
+        Transition = {Transition}
+        open = {open}
         title={createText}
         handleClose={handleClose}
         onSave={addBucket}

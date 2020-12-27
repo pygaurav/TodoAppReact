@@ -5,7 +5,7 @@ import Input from "@material-ui/core/Input";
 import Grid from "@material-ui/core/Grid";
 const BucketComponent = (props) => {
   const { values, editBucket, removeBucket, getTodo } = props;
-  const { name, key } = values;
+  const { name, key, color } = values;
   const [bucketName, setBucketName] = useState("");
   useEffect(() => {
     setBucketName(name);
@@ -28,7 +28,7 @@ const BucketComponent = (props) => {
   };
   return (
     <li>
-      <Grid container>
+      <Grid container style={{background:color}}>
         <Grid item xs={9}>
           <Input
             onChange={onChange}

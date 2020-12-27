@@ -6,7 +6,7 @@ const getTodo = (res) => {
     type: GET_TODO,
     payload: res.payload,
     selectedbucket: res.selectedbucket,
-    selectedbucketid: res.selectedbucketid
+    selectedbucketid: res.selectedbucketid,
   };
 };
 const getAsyncTodo = (res) => {
@@ -21,7 +21,6 @@ const getAsyncTodo = (res) => {
           data = {
             key: e.id,
             name: e.name,
-            color: e.color,
             isCompleted: e.is_completed,
             bucketId: e.bucket_id
           };

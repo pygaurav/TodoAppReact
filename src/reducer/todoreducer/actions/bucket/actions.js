@@ -1,6 +1,6 @@
 import { GET_BUCKET, EDIT_BUCKET, REMOVE_BUCKET } from "../../types";
 import axios from "../../../../axios-instance";
-
+import colorGenerator from '../../../../utils/GenerateColor'
 const cleanUpGetPayload = (inputPayload) => {
   inputPayload.forEach((e) => {
     e.key = e.id;
@@ -37,6 +37,7 @@ const getAsyncBucket = () => {
 
 const addAsyncBucket = (res) => {
   return (dispatch) => {
+    res.color = colorGenerator()
     axios
       .post("/bucket", res)
       .then((d) => {

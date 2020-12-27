@@ -3,23 +3,28 @@ import Popover from "@material-ui/core/Popover";
 import Input from "@material-ui/core/Input";
 import { makeStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
-import Typography from "@material-ui/core/Typography";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Grid from "@material-ui/core/Grid";
+import Slide from "@material-ui/core/Slide";
 const NewBucketComponent = (props) => {
   const useStyles = makeStyles((theme) => ({
     typography: {
-      padding: theme.spacing(2)
-    }
+      padding: theme.spacing(2),
+    },
   }));
   const classes = useStyles();
   const {
-    anchorEl,
+    Transition,
     open,
-    id,
     handleClose,
     title,
     onSave,
     bucketid,
-    bucketname
+    bucketname,
   } = props;
   const [name, setName] = useState("");
   const onChange = (e) => {
@@ -36,32 +41,33 @@ const NewBucketComponent = (props) => {
       Payload.bucketname = bucketname;
     }
     onSave(Payload);
+    setName("");
+    handleClose();
   };
   return (
-    <Popover
-      id={id}
+    <Dialog
       open={open}
-      anchorEl={anchorEl}
+      TransitionComponent={Transition}
+      keepMounted
+      className="cls-dialog"
       onClose={handleClose}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "center"
-      }}
-      transformOrigin={{
-        vertical: "bottom",
-        horizontal: "center"
-      }}
+      aria-labelledby="alert-dialog-slide-title"
+      aria-describedby="alert-dialog-slide-description"
     >
-      <div className={classes.typography}>
-        <span>
-          <Typography>{title}</Typography>
-          <Input value={name} onChange={onChange} />
-          <Icon onClick={handleSave} color="primary" className="clsRight">
-            save
-          </Icon>
-        </span>
-      </div>
-    </Popover>
+      <DialogTitle id="alert-dialog-slide-title">{title}</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-slide-description">
+          <Grid item xs={10}>
+            <Input value={name} onChange={onChange} />
+          </Grid>
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Icon onClick={handleSave} color="primary" className="clsRight">
+          save
+        </Icon>
+      </DialogActions>
+    </Dialog>
   );
 };
 
