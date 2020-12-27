@@ -65,6 +65,7 @@ const BucketListComponent = (props) => {
         handleClose={handleClose}
         onSave={addBucket}
         bucketid=""
+        buckets={buckets}
       />
     </div>
   );

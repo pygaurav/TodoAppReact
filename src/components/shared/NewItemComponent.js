@@ -10,6 +10,8 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/Grid";
 import Slide from "@material-ui/core/Slide";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import TextField from "@material-ui/core/TextField";
 const NewBucketComponent = (props) => {
   const useStyles = makeStyles((theme) => ({
     typography: {
@@ -24,11 +26,17 @@ const NewBucketComponent = (props) => {
     title,
     onSave,
     bucketid,
+    buckets,
     bucketname,
+    bucketName,
   } = props;
+
   const [name, setName] = useState("");
   const onChange = (e) => {
     setName(e.target.value);
+  };
+  const onChangeSuggestion = (e) => {
+    setName(e.target.innerText);
   };
   const handleSave = () => {
     let Payload = {};
@@ -58,7 +66,26 @@ const NewBucketComponent = (props) => {
       <DialogContent>
         <DialogContentText id="alert-dialog-slide-description">
           <Grid item xs={10}>
-            <Input value={name} onChange={onChange} />
+            {/* <Input value={name} onChange={onChange} /> */}
+            {buckets ? (
+              <Autocomplete
+                options={buckets.map((option) => option.name)}
+                onChange={onChangeSuggestion}
+                inputValue={name}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    margin="normal"
+                    value={name}
+                    onChange={onChange}
+                    variant="outlined"
+                    InputProps={{ ...params.InputProps, type: "search" }}
+                  />
+                )}
+              />
+            ) : (
+              <Input value={name} onChange={onChange} />
+            )}
           </Grid>
         </DialogContentText>
       </DialogContent>

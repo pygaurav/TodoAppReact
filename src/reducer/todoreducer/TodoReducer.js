@@ -41,6 +41,8 @@ const TodoReducer = (state = initialState, action) => {
           return e.key !== action.payload.key;
         }),
         todo: [],
+        selectedbucket: "",
+        selectedbucketid: 0
       };
     case ADD_BUCKET:
       let bucketlength = state.buckets.length;
